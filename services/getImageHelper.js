@@ -28,7 +28,7 @@ var getLastImage = async () => {
                 console.log(metadata.openGraph.image.url);
                 EmitUrlapp.EmitUrl(metadata.openGraph.image.url)
             })
-            resolve(responseHelper.response('Ok , I have pulled that for you on screen'))
+            resolve(responseHelper.responseBody('Ok , I have pulled that for you on screen'))
             //sendUrl(body.files[0].permalink_public)
         })
     })
@@ -57,7 +57,7 @@ var getFirstImage = async () => {
                 console.log(metadata.openGraph.image.url);
                 EmitUrlapp.EmitUrl(metadata.openGraph.image.url)
             })
-            resolve(responseHelper.response('Ok , I have pulled that for you on screen'))
+            resolve(responseHelper.responseBody('Ok , I have pulled that for you on screen'))
             //sendUrl(body.files[0].permalink_public)
         })
     })
@@ -83,7 +83,7 @@ var getPreviousImage = async () => {
             // check if next is there 
             if (len < nextImage) {
                 console.log("break")
-                resolve(responseHelper.response('I am sorry , There no previous images '))
+                resolve(responseHelper.responseBody('I am sorry , There no previous images '))
                 return
             }
 
@@ -98,7 +98,7 @@ var getPreviousImage = async () => {
                 EmitUrlapp.EmitUrl(metadata.openGraph.image.url)
             })
             cache.put('imageDisplayed', nextImage.valueOf());
-            resolve(responseHelper.response('Ok , I have pulled that for you on screen'))
+            resolve(responseHelper.responseBody('Ok , I have pulled that for you on screen'))
             //sendUrl(body.files[0].permalink_public)
         })
     })
@@ -124,7 +124,7 @@ var getNextImage = async () => {
             // check if next is there 
             if (len < nextImage) {
                 console.log("break")
-                resolve(responseHelper.response('I am sorry , There no next images '))
+                resolve(responseHelper.responseBody('I am sorry , There no next images '))
                 return
             }
 
@@ -139,7 +139,7 @@ var getNextImage = async () => {
                 EmitUrlapp.EmitUrl(metadata.openGraph.image.url)
             })
             cache.put('imageDisplayed', nextImage.valueOf());
-            resolve(responseHelper.response('Ok , I have pulled that for you on screen'))
+            resolve(responseHelper.responseBody('Ok , I have pulled that for you on screen'))
             //sendUrl(body.files[0].permalink_public)
         })
     })
@@ -150,14 +150,14 @@ var getNextImage = async () => {
 var getHomeImage = async () => {
 
     EmitUrlapp.EmitUrl("images/resized.png")
-    return responseHelper.response('Ok , I have closed the image')
+    return responseHelper.responseBody('Ok , I have closed the image')
 
 }
 
 var getTestImage = async () => {
     console.log(cache.get('imageDisplayed'))
     EmitUrlapp.EmitUrl("https://files.slack.com/files-pri/TCXKRK0KU-FDSGRLWTE/creds.png?pub_secret=7346d05fe8")
-    return responseHelper.response('Ok , I have pulled test the imagaes')
+    return responseHelper.responseBody('Ok , I have pulled test the imagaes')
 }
 
 var makeExternal = (id) => {

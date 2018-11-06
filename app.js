@@ -116,5 +116,5 @@ var EmitUrl = (imageurl) => {
 
 //app.listen(process.env.PORT || 5000, () => console.log('webhook is listening'));
 //app.listen(process.env.PORT || port, () => console.log('webhook is listening'));
-
+exports.EmitUrl = EmitUrl;
 module.exports = app;
