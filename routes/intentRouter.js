@@ -22,7 +22,7 @@ var notificationHelper = require('../services/notificationsHelper')
 var getImageHelper = require('../services/getImageHelper')
 var createReminderHelper = require('../services/createReminderHelper')
 var getMessageHelper = require('../services/getLastMessageHelper')
-var responseHelper = require('../services/responseHelper')
+
 
 
 router.post('/', async function (req, res) {
@@ -33,6 +33,7 @@ router.post('/', async function (req, res) {
         res.json(responseHelper.responseBody(output))
     }
     switch (req.body.result.parameters.intent) {
+
         // calendar
         case "createCalendarHelper":
             res.json(await createCalendarHelper.scheduler(req))
@@ -70,10 +71,51 @@ router.post('/', async function (req, res) {
         case "deleteOutlookTask":
             res.send(await responseHelper.responseBody("I am sorry , I did not get you"))
             break;
+            //--------------------------------Slack APP---------------------------------------//
+            //Post on channel
+        case "post":
+            res.json(await postHelper.postMessageResponse(req, slackApiTokenvdi))
+            break;
+
+            //Notification   
+        case "notification":
+            res.json(await notificationHelper.notifications(req, slackApiToken))
+            break;
+            
+            // Images   
+        case "getLastImage":
+            res.json(await getImageHelper.getLastImage())
+            break;
+        case "getFirstImage":
+            res.json(await getImageHelper.getFirstImage())
+            break;
+        case "getHomeImage":
+            res.json(await getImageHelper.getHomeImage())
+            break;
+        case "getTestImage":
+            res.json(await getImageHelper.getTestImage())
+            break;
+        case "getNextImage":
+            res.json(await getImageHelper.getNextImage())
+            break;
+        case "getPreviousImage":
+            res.json(await getImageHelper.getPreviousImage())
+            break;
+
+
+            // Message    
+        case "getMessage":
+            res.json(await getMessageHelper.getLastMessage(req, slackApiToken))
+            break;
+
+            // Reminder    
+        case "createReminder":
+            res.json(await createReminderHelper.createReminder(req, slackApiToken))
+            break;
 
 
 
-        // if the intent is not found
+            // if the intent is not found
         default:
             console.log("Intent not found in intentRounter")
             res.json(await responseHelper.responseBody("I am sorry , I did not get you"));
