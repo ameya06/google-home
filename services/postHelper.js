@@ -32,11 +32,11 @@ var postMessage = async (req, slackApiToken) => {
 var postMessageResponse = async (req, slackApiToken) => {
     if ((JSON.parse(await postMessage(req, slackApiToken)).ok)) {
         var output = "Ok, I have posted that for you"
-        return responseHelper.response(output)
+        return responseHelper.responseBody(output)
 
     } else {
         var output = "I am sorry , I did not get that "
-        return responseHelper.response(output)
+        return responseHelper.responseBody(output)
 
     }
 }

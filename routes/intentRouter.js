@@ -74,7 +74,7 @@ router.post('/', async function (req, res) {
             //--------------------------------Slack APP---------------------------------------//
             //Post on channel
         case "post":
-            res.json(await postHelper.postMessageResponse(req, slackApiTokenvdi))
+            res.json(await postHelper.postMessageResponse(req, slackApiToken))
             break;
 
             //Notification   
