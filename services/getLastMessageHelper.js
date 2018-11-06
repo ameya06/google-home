@@ -14,13 +14,13 @@ var getLastMessage = async (req, slackToken) => {
             var data = JSON.parse(body)
             if (data.ok) {
                 // console.log("body :: ", body)
-                resolve(responseHelper.response("Hi, last message on " + req.body.result.parameters.channel + " channel is " + data.messages[0].text))
+                resolve(responseHelper.responseBody("Hi, last message on " + req.body.result.parameters.channel + " channel is " + data.messages[0].text))
 
             } else {
                 //return  
                 console.log("Error err in get message ===>" + err + " body====>" + body)
                 // return  responseHelper.response("I am sorry , I did not get that") 
-                resolve(responseHelper.response("I am sorry , I did not get that"));
+                resolve(responseHelper.responseBody("I am sorry , I did not get that"));
 
             }
 

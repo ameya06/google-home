@@ -15,7 +15,7 @@ var addNotesHelper = require('../services/addNotesHelper')
 
 // Slack api
 var slackApiToken = 'xoxp-439671646674-439671647266-461021596227-f03dedfb5cb1af530024a7ced96eade7';
-var slackApiTokenvdi = 'xoxp-2152601087-446900390149-463945941040-49776293ec6ff5124f0639f1a6021046';
+
 
 var postHelper = require('../services/postHelper')
 var notificationHelper = require('../services/notificationsHelper')
