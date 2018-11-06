@@ -27,11 +27,11 @@ var getMessageHelper = require('../services/getLastMessageHelper')
 
 router.post('/', async function (req, res) {
 
-    if (req.body.result.parameters.dev_token != process.env.DEVELOPER_ACCESS_TOKEN) {
-        console.log("In intenRouter in token check failed")
-        var output = "I am sorry.I did not get you"
-        res.json(responseHelper.responseBody(output))
-    }
+    // if (req.body.result.parameters.dev_token != process.env.DEVELOPER_ACCESS_TOKEN) {
+    //     console.log("In intenRouter in token check failed")
+    //     var output = "I am sorry.I did not get you"
+    //     res.json(responseHelper.responseBody(output))
+    // }
     switch (req.body.result.parameters.intent) {
 
         // calendar

@@ -20,7 +20,7 @@ const getEmailAddressHelper = require('../services/getEamilAddressHelper')
 
 
 
-var scheduler = async function (req) {
+var scheduler = async function (req,request_token) {
 
   if (req.body.result.parameters.dev_token != process.env.DEVELOPER_ACCESS_TOKEN) {
     console.log("In createCalendarHelper in token check failed")
