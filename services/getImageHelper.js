@@ -64,6 +64,35 @@ var getFirstImage = async () => {
 
 }
 
+var getPresentationModeImage = async () => {
+    return new Promise(function (resolve, reject) {
+        var option = {
+            url: imageurl,
+            json: true
+        }
+        request.get(option, (err, res, body) => {
+            if (err) {
+                return console.log(err);
+            }
+            var len = Object.keys(body.messages).length - 1;
+            cache.put('imageDisplayed', len);
+            console.log("From cahce --->" + cache.get('imageDisplayed'))
+            var makeExternaldata = makeExternal(body.messages[len].files[0].id)
+            console.log(makeExternaldata)
+            var imageUrl = (body.messages[len].files[0].permalink_public);
+            // scrape for metadata
+
+            scrape(imageUrl).then(function (metadata) {
+                console.log(metadata.openGraph.image.url);
+                EmitUrlapp.EmitUrl(metadata.openGraph.image.url)
+            })
+            resolve(responseHelper.responseBody('Ok , I have pulled that for you on screen'))
+            //sendUrl(body.files[0].permalink_public)
+        })
+    })
+
+}
+
 var getPreviousImage = async () => {
     var currentImage = cache.get('imageDisplayed')
     var nextImage = currentImage + 1

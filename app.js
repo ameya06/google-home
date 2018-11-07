@@ -88,7 +88,7 @@ app.use(function (err, req, res, next) {
 
 // keeping server awake
 setInterval(function () {
-  request.get("https://still-hollows-76973.herokuapp.com");
+  request.get("https://dry-caverns-78381.herokuapp.com/");
   console.log("Keeping server awake")
 }, 900000);
 

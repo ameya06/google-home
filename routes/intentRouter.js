@@ -95,13 +95,7 @@ router.post('/', async function (req, res) {
         case "getTestImage":
             res.json(await getImageHelper.getTestImage())
             break;
-        case "getNextImage":
-            res.json(await getImageHelper.getNextImage())
-            break;
-        case "getPreviousImage":
-            res.json(await getImageHelper.getPreviousImage())
-            break;
-
+     
 
             // Message    
         case "getMessage":
