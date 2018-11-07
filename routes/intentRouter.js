@@ -47,7 +47,7 @@ router.post('/', async function (req, res) {
             res.json(await getTaskHelper.getTask(req))
             break;
         case "createTask":
-            res.json(await addNotesHelper.createTask(req))
+            res.json(await createTaskHelper.createTask(req))
             break;
 
             // Notes    
