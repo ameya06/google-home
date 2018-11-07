@@ -45,7 +45,7 @@ var scheduler = async function (req) {
     const dateTimeEnd = new Date(Date.parse(req.body.result.parameters.date + 'T' + req.body.result.parameters.endTime.split('-')[0] + timeZoneOffset));
     var emailAddress = 'C91271@ust-global.com';
     var location = req.body.result.parameters.location;
-    var attendees = getAtttendeesHelper.getattendees(req.body.result.parameters.invites);
+    var attendees = getAtttendeesHelper.getattendees(req.body.result.parameters.attendees);
 
     var payload = {
       "subject": `${meetingSubject}`,
