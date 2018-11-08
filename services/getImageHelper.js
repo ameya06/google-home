@@ -104,7 +104,7 @@ var startPresentation = async () => {
                     presentation(--i);
 
                     console.log("--i "+i)
-                }, 10000);
+                }, 3000);
             }
             
 
