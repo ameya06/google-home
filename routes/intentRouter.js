@@ -81,7 +81,7 @@ router.post('/', async function (req, res) {
         case "notification":
             res.json(await notificationHelper.notifications(req, slackApiToken))
             break;
-            
+
             // Images   
         case "getLastImage":
             res.json(await getImageHelper.getLastImage())
@@ -95,7 +95,15 @@ router.post('/', async function (req, res) {
         case "getTestImage":
             res.json(await getImageHelper.getTestImage())
             break;
-     
+
+            //Presnetation mode
+        case "startPresentation":
+            res.json(await getImageHelper.startPresentation())
+            break;
+        case "stopPresentation":
+            res.json(await getImageHelper.stopPresentation())
+            break;
+
 
             // Message    
         case "getMessage":

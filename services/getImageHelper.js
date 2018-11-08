@@ -5,6 +5,10 @@ var imageurl = 'https://slack.com/api/channels.history?token=xoxp-439671646674-4
 var scrape = require('html-metadata');
 var responseHelper = require('../services/responseHelper')
 var cache = require('memory-cache');
+var images = []
+const delay = require('delay');
+var stopflag = false
+
 
 var getLastImage = async () => {
     return new Promise(function (resolve, reject) {
@@ -49,12 +53,14 @@ var getFirstImage = async () => {
             cache.put('imageDisplayed', len);
             console.log("From cahce --->" + cache.get('imageDisplayed'))
             var makeExternaldata = makeExternal(body.messages[len].files[0].id)
+
             console.log(makeExternaldata)
             var imageUrl = (body.messages[len].files[0].permalink_public);
             // scrape for metadata
 
             scrape(imageUrl).then(function (metadata) {
                 console.log(metadata.openGraph.image.url);
+
                 EmitUrlapp.EmitUrl(metadata.openGraph.image.url)
             })
             resolve(responseHelper.responseBody('Ok , I have pulled that for you on screen'))
@@ -64,7 +70,8 @@ var getFirstImage = async () => {
 
 }
 
-var getPresentationModeImage = async () => {
+var startPresentation = async () => {
+    stopflag = false
     return new Promise(function (resolve, reject) {
         var option = {
             url: imageurl,
@@ -75,18 +82,35 @@ var getPresentationModeImage = async () => {
                 return console.log(err);
             }
             var len = Object.keys(body.messages).length - 1;
-            cache.put('imageDisplayed', len);
-            console.log("From cahce --->" + cache.get('imageDisplayed'))
-            var makeExternaldata = makeExternal(body.messages[len].files[0].id)
-            console.log(makeExternaldata)
-            var imageUrl = (body.messages[len].files[0].permalink_public);
-            // scrape for metadata
+           presentation(len) 
 
-            scrape(imageUrl).then(function (metadata) {
-                console.log(metadata.openGraph.image.url);
-                EmitUrlapp.EmitUrl(metadata.openGraph.image.url)
-            })
-            resolve(responseHelper.responseBody('Ok , I have pulled that for you on screen'))
+           async function presentation(i) {
+                  if(stopflag) return
+               
+                setTimeout(function () {
+                    console.log(i+" tets")
+                    var makeExternaldata = makeExternal(body.messages[i].files[0].id)
+                    console.log(makeExternaldata)
+                    var imageUrl = (body.messages[i].files[0].permalink_public);
+                    // scrape for metadata
+                    if(stopflag) return
+                    scrape(imageUrl).then(function (metadata) {
+                        console.log(metadata.openGraph.image.url)
+                        images.push(metadata.openGraph.image.url)
+                        EmitUrlapp.EmitUrl(metadata.openGraph.image.url)
+                    })
+                    if (i <= 0) i = len ; 
+                    if(stopflag) return
+                    presentation(--i);
+
+                    console.log("--i "+i)
+                }, 10000);
+            }
+            
+
+            // cache.put('imageDisplayed', len);
+
+            resolve(responseHelper.responseBody('Ok , I have started the presentation '))
             //sendUrl(body.files[0].permalink_public)
         })
     })
@@ -174,7 +198,13 @@ var getNextImage = async () => {
     })
 
 }
+var stopPresentation = async () => {
+    stopflag = true
+    EmitUrlapp.EmitUrl("images/resized.png")
+   // stopflag = false
+    return responseHelper.responseBody('Ok , I have stoped the presentation')
 
+}
 
 var getHomeImage = async () => {
 
@@ -205,9 +235,12 @@ var makeExternal = (id) => {
 
 
 
+
+exports.startPresentation = startPresentation
 exports.getTestImage = getTestImage
 exports.getHomeImage = getHomeImage
 exports.getFirstImage = getFirstImage
 exports.getLastImage = getLastImage
 exports.getNextImage = getNextImage
 exports.getPreviousImage = getPreviousImage
+exports.stopPresentation = stopPresentation

@@ -82,7 +82,7 @@ var scheduler = async function (req) {
           console.log("Something  Wrong Happend =====>"+err );
         });
       }
-      output = 'Ok, I have schedule your meeting'
+      output = 'Ok, I have scheduled your meeting'
       return responseHelper.responseBody(output)
 
     } catch (err) {

@@ -44,7 +44,7 @@ async function getTokenFromCode(auth_code, res) {
 async function getAccessToken(cookies, res) {
   // Do we have an access token cached?
   let token = cookies.graph_access_token;
-
+   
   if (token) {
     // We have a token, but is it expired?
     // Expire 5 minutes early to account for clock differences
