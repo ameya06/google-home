@@ -11,6 +11,7 @@ var stopflag = false
 
 
 var getLastImage = async () => {
+    stopflag = true
     return new Promise(function (resolve, reject) {
         var option = {
             url: imageurl,
@@ -40,6 +41,7 @@ var getLastImage = async () => {
 }
 
 var getFirstImage = async () => {
+    stopflag = true
     return new Promise(function (resolve, reject) {
         var option = {
             url: imageurl,
@@ -207,7 +209,7 @@ var stopPresentation = async () => {
 }
 
 var getHomeImage = async () => {
-
+    stopflag = true
     EmitUrlapp.EmitUrl("images/resized.png")
     return responseHelper.responseBody('Ok , I have closed the image')
 
