@@ -227,7 +227,7 @@ var makeExternal = (id) => {
     urlpost1 = 'https://slack.com/api/files.sharedPublicURL?token=xoxp-439671646674-439671647266-461021596227-f03dedfb5cb1af530024a7ced96eade7&file=' + `${id}` + '&pretty=1'
     urlpost = 'https://slack.com/api/files.sharedPublicURL?token=xoxp-473131921458-474856515188-476438635367-20a34b62dfde255b9ddbe480928c0a82&file=' + `${id}` + '&pretty=1'
     request({
-        url: urlpost,
+        url: urlpost1,
         method: "POST",
         json: true
     }, (err, res, body) => {
