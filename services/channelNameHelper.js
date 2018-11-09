@@ -23,7 +23,7 @@ var channelId = (name) => {
         case "slackbot":
             return "DE02AN955"
         case "jp":
-            return "FDYQS0NHE"
+            return "DDZ0TR490"
             break;
             //CDNP6GNSK
 

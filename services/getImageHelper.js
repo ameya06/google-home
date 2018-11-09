@@ -1,7 +1,8 @@
 var EmitUrlapp = require('../app')
 const request = require('request');
 var url = 'https://slack.com/api/files.list?token=xoxp-439671646674-439671647266-461021596227-f03dedfb5cb1af530024a7ced96eade7&pretty=1'
-var imageurl = 'https://slack.com/api/channels.history?token=xoxp-439671646674-439671647266-461021596227-f03dedfb5cb1af530024a7ced96eade7&channel=CDNP6GNSK&pretty=1'
+var imageurl1 = 'https://slack.com/api/channels.history?token=xoxp-439671646674-439671647266-461021596227-f03dedfb5cb1af530024a7ced96eade7&channel=CDNP6GNSK&pretty=1'
+var imageurl = 'https://slack.com/api/channels.history?token=xoxp-473131921458-474856515188-476438635367-20a34b62dfde255b9ddbe480928c0a82&channel=CDYJJUBUY&pretty=1'
 var scrape = require('html-metadata');
 var responseHelper = require('../services/responseHelper')
 var cache = require('memory-cache');
@@ -85,31 +86,31 @@ var startPresentation = async () => {
                 return console.log(err);
             }
             var len = Object.keys(body.messages).length - 1;
-           presentation(len) 
+            presentation(len)
 
-           async function presentation(i) {
-                  if(stopflag) return
-               
+            async function presentation(i) {
+                if (stopflag) return
+
                 setTimeout(function () {
-                    console.log(i+" tets")
+                    console.log(i + " tets")
                     var makeExternaldata = makeExternal(body.messages[i].files[0].id)
                     console.log(makeExternaldata)
                     var imageUrl = (body.messages[i].files[0].permalink_public);
                     // scrape for metadata
-                    if(stopflag) return
+                    if (stopflag) return
                     scrape(imageUrl).then(function (metadata) {
                         console.log(metadata.openGraph.image.url)
                         images.push(metadata.openGraph.image.url)
                         EmitUrlapp.EmitUrl(metadata.openGraph.image.url)
                     })
-                    if (i <= 0) i = len ; 
-                    if(stopflag) return
+                    if (i <= 0) i = len;
+                    if (stopflag) return
                     presentation(--i);
 
-                    console.log("--i "+i)
+                    console.log("--i " + i)
                 }, 3000);
             }
-            
+
 
             // cache.put('imageDisplayed', len);
 
@@ -204,7 +205,7 @@ var getNextImage = async () => {
 var stopPresentation = async () => {
     stopflag = true
     EmitUrlapp.EmitUrl("images/resized.png")
-   // stopflag = false
+    // stopflag = false
     return responseHelper.responseBody('Ok , I have stopped the presentation')
 
 }
@@ -224,7 +225,7 @@ var getTestImage = async () => {
 
 var makeExternal = (id) => {
 
-    urlpost = 'https://slack.com/api/files.sharedPublicURL?token=xoxp-439671646674-439671647266-461021596227-f03dedfb5cb1af530024a7ced96eade7&file=' + `${id}` + '&pretty=1'
+    urlpost = 'https://slack.com/api/files.sharedPublicURL?token=xoxp-473131921458-474856515188-476438635367-20a34b62dfde255b9ddbe480928c0a82&file=' + `${id}` + '&pretty=1'
     request({
         url: urlpost,
         method: "POST",

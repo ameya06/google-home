@@ -37,6 +37,7 @@ var postMessageResponse = async (req, slackApiToken) => {
         return responseHelper.responseBody(output)
 
     } else {
+        console.log(JSON.parse(await postMessage(req, slackApiToken)))
         console.log("Err from ======>postHelper")
         var output = "I am sorry , I did not get that "
         return responseHelper.responseBody(output)
