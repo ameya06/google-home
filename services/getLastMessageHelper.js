@@ -14,7 +14,7 @@ var getLastMessage = async (req, slackToken) => {
             var data = JSON.parse(body)
             if (data.ok) {
                 // console.log("body :: ", body)
-                resolve(responseHelper.responseBody("Hi, last message on " + req.body.result.parameters.channel + " channel is " + data.messages[0].text))
+                resolve(responseHelper.responseBody("Hi, last message on " + req.body.result.parameters.channel + " is " + data.messages[0].text))
 
             } else {
                 //return  
