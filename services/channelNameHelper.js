@@ -25,6 +25,9 @@ var channelId = (name) => {
         case "jp":
             return "DDZ0TR490"
             break;
+        case "demo":
+            return "CDX9VDZL5"
+            break;
             //CDNP6GNSK
 
         default:
