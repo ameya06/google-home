@@ -1,9 +1,7 @@
 var EmitUrlapp = require('../app')
 const request = require('request');
-var slackApiToken = process.env.SLACKTOKEN;
-var imageChannelID ='CDYJJUBUY'
-//var url = 'https://slack.com/api/files.list?token=xoxp-439671646674-439671647266-461021596227-f03dedfb5cb1af530024a7ced96eade7&pretty=1'
-var imageurl = 'https://slack.com/api/channels.history?token='+`${slackApiToken}`+'&channel='+`${imageChannelID}`+'&pretty=1'
+var url = 'https://slack.com/api/files.list?token=xoxp-439671646674-439671647266-461021596227-f03dedfb5cb1af530024a7ced96eade7&pretty=1'
+var imageurl = 'https://slack.com/api/channels.history?token=xoxp-439671646674-439671647266-461021596227-f03dedfb5cb1af530024a7ced96eade7&channel=CDNP6GNSK&pretty=1'
 var scrape = require('html-metadata');
 var responseHelper = require('../services/responseHelper')
 var cache = require('memory-cache');
@@ -75,6 +73,7 @@ var getFirstImage = async () => {
 }
 
 var startPresentation = async () => {
+    //stopflag = true
     stopflag = false
     return new Promise(function (resolve, reject) {
         var option = {
@@ -225,7 +224,7 @@ var getTestImage = async () => {
 
 var makeExternal = (id) => {
 
-    urlpost = 'https://slack.com/api/files.sharedPublicURL?token='+`${slackApiToken}`+'&file=' + `${id}` + '&pretty=1'
+    urlpost = 'https://slack.com/api/files.sharedPublicURL?token=xoxp-439671646674-439671647266-461021596227-f03dedfb5cb1af530024a7ced96eade7&file=' + `${id}` + '&pretty=1'
     request({
         url: urlpost,
         method: "POST",
