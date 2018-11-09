@@ -34,6 +34,7 @@ var getCalendar = async function (req) {
           .select('subject,start,end,attendees')
           .orderby('start/dateTime ASC')
           .get();
+          console.log(result+"result from the meeting ")
         var startlocal = (moment(result.value[0].start.dateTime + 'Z')).tz('America/Chicago').format('LT');
         var endlocal = (moment(result.value[0].end.dateTime + 'Z')).tz('America/Chicago').format('LT')
         var startlocal = startlocal.split('CDT');
@@ -42,8 +43,8 @@ var getCalendar = async function (req) {
         return responseHelper.responseBody(output)
       } catch (err) {
         console.log('Getcalendar helper in catch ====>' + `${err.code} ${err.message}`)
-        var output = "I am sorry.I did not get you"
-        responseHelper.responseBody(output)
+        var output = "Hmm,I cannot see any meetings on your calendar"
+      return responseHelper.responseBody(output)
       }
 
     } else {
@@ -54,6 +55,7 @@ var getCalendar = async function (req) {
           .select('subject,start,end,attendees')
           .orderby('start/dateTime ASC')
           .get();
+
         var numberOfmeetings = Object.keys(result.value).length;
         var startlocal = (moment(result.value[0].start.dateTime + 'Z')).tz('America/Chicago').format('LT');
         var endlocal = (moment(result.value[0].end.dateTime + 'Z')).tz('America/Chicago').format('LT')
@@ -67,15 +69,15 @@ var getCalendar = async function (req) {
 
       } catch (err) {
         console.log('Getcalendar helper in catch ====>' + `${err.code} ${err.message}`)
-        var output = "I am sorry.I did not get you"
-        responseHelper.responseBody(output)
+        var output = "Hmm,I cannot see any meetings on your calendar"
+        return  responseHelper.responseBody(output)
       }
 
     }
   } else {
     console.log('getcalendarHelper in else ====>' + `${err.code} ${err.message}`)
     var output = "I am sorry.I did not get you"
-    responseHelper.responseBody(output)
+    return  responseHelper.responseBody(output)
   }
 
 }
