@@ -22,27 +22,18 @@ var getCalendar = async function (req) {
     });
   
     const earlystart = new Date(new Date().setHours(0, 0, 0, 0));
-    console.log(earlystart+"early")
-    const start =req.body.timestamp; //new Date(new Date().setHours(0, 0, 0,0));
-    
-  // console.log("test:=====>"+start.toISOString())
-    const end = new Date(new Date(earlystart).setHours(23, 59, 59, 999));
-    const end2 =  new Date(new Date(new Date(new Date(start).setHours(0, 0, 0, 0))).setHours(23, 59, 59, 999));
-    console.log(earlystart+"======early")
+    const start = new Date(req.body.timestamp); //new Date(new Date().setHours(0, 0, 0,0));
     console.log("test:=====>"+req.body.timestamp)
-    console.log(end+"==========end")
-    console.log(end2.toISOString()+"==========end22222")
+   console.log("test:=====>"+start.toISOString())
+    const end = new Date(new Date(earlystart).setHours(23, 59, 59, 999));
    if (req.body.result.parameters.getmeets != 'all') {
       try {
-        //https://graph.microsoft.com/v1.0/me/calendarview?startdatetime=2018-11-09T04:11:45.185Z&enddatetime=2018-11-16T04:11:45.185Z
         const result = await client
-          .api(`me/calendarview?startdatetime=`+`${start}`+`&enddatetime=`+`2018-11-16T02:30:45.185Z`)
+          .api(`/me/calendarView?startDateTime=${start.toISOString()}&endDateTime=${end.toISOString()}`)
           .top(1)
           .select('subject,start,end,attendees')
           .orderby('start/dateTime ASC')
           .get();
-
-            console.log(result)
         var startlocal = (moment(result.value[0].start.dateTime + 'Z')).tz('America/Chicago').format('LT');
         var endlocal = (moment(result.value[0].end.dateTime + 'Z')).tz('America/Chicago').format('LT')
         var startlocal = startlocal.split('CDT');
@@ -59,11 +50,10 @@ var getCalendar = async function (req) {
       try {
         console.log('webhook inside else')
         const result = await client
-          .api(`me/calendarview?startdatetime=`+`${start}`+`&enddatetime=`+`2018-11-16T02:30:45.185Z`)
+          .api(`/me/calendarView?startDateTime=${start.toISOString()}&endDateTime=${end.toISOString()}`)
           .select('subject,start,end,attendees')
           .orderby('start/dateTime ASC')
           .get();
-          console.log(result)
         var numberOfmeetings = Object.keys(result.value).length;
         var startlocal = (moment(result.value[0].start.dateTime + 'Z')).tz('America/Chicago').format('LT');
         var endlocal = (moment(result.value[0].end.dateTime + 'Z')).tz('America/Chicago').format('LT')
@@ -78,14 +68,14 @@ var getCalendar = async function (req) {
       } catch (err) {
         console.log('Getcalendar helper in catch ====>' + `${err.code} ${err.message}`)
         var output = "I am sorry.I did not get you"
-       return responseHelper.responseBody(output)
+        responseHelper.responseBody(output)
       }
 
     }
   } else {
     console.log('getcalendarHelper in else ====>' + `${err.code} ${err.message}`)
-    var output = "Hmm, its loud here ,I am sorry.I did not get you"
-   return responseHelper.responseBody(output)
+    var output = "I am sorry.I did not get you"
+    responseHelper.responseBody(output)
   }
 
 }
