@@ -55,7 +55,7 @@ var getCalendar = async function (req) {
           .select('subject,start,end,attendees')
           .orderby('start/dateTime ASC')
           .get();
-
+       
         var numberOfmeetings = Object.keys(result.value).length;
         var startlocal = (moment(result.value[0].start.dateTime + 'Z')).tz('America/Chicago').format('LT');
         var endlocal = (moment(result.value[0].end.dateTime + 'Z')).tz('America/Chicago').format('LT')

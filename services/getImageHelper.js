@@ -15,7 +15,7 @@ var getLastImage = async () => {
     stopflag = true
     return new Promise(function (resolve, reject) {
         var option = {
-            url: imageurl1,
+            url: imageurl,
             json: true
         }
         request.get(option, (err, res, body) => {
@@ -78,13 +78,14 @@ var startPresentation = async () => {
     stopflag = false
     return new Promise(function (resolve, reject) {
         var option = {
-            url: imageurl,
+            url: imageurl1,
             json: true
         }
         request.get(option, (err, res, body) => {
             if (err) {
                 return console.log(err);
             }
+            console.log(body+" ====> body")
             var len = Object.keys(body.messages).length - 1;
             presentation(len)
 
