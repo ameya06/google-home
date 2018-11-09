@@ -204,7 +204,7 @@ var stopPresentation = async () => {
     stopflag = true
     EmitUrlapp.EmitUrl("images/resized.png")
    // stopflag = false
-    return responseHelper.responseBody('Ok , I have stoped the presentation')
+    return responseHelper.responseBody('Ok , I have stopped the presentation')
 
 }
 

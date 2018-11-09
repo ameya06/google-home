@@ -12,9 +12,11 @@ var deleteOutlookTask = require('../services/deleteOutlookTaskHelper')
 var responseHelper = require('../services/responseHelper')
 var createNoteHelper = require('../services/createNoteHelper')
 var addNotesHelper = require('../services/addNotesHelper')
+var getLastMessageHelper = require('../services/getLastMessageHelper')
 
 // Slack api
-var slackApiToken = 'xoxp-439671646674-439671647266-461021596227-f03dedfb5cb1af530024a7ced96eade7';
+var slackApiToken = process.env.SLACKTOKEN;
+
 
 
 var postHelper = require('../services/postHelper')
@@ -78,9 +80,10 @@ router.post('/', async function (req, res) {
             break;
 
             //Notification   
-        case "notification":
-            res.json(await notificationHelper.notifications(req, slackApiToken))
-            break;
+        // case "notification":
+        //     res.json(await notificationHelper.notifications(req, slackApiToken))
+        //     break;
+            
 
             // Images   
         case "getLastImage":
@@ -106,7 +109,7 @@ router.post('/', async function (req, res) {
 
 
             // Message    
-        case "getMessage":
+        case "getLastMessage":
             res.json(await getMessageHelper.getLastMessage(req, slackApiToken))
             break;
 

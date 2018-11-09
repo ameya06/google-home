@@ -27,14 +27,13 @@ var createTask = async function (req) {
             var payload = {
                 "planId": `${planId}`,
                 "bucketId": `${bucketId}`,
-                "title": `${title}`,
-                "importance": "low",
-                "assignments": {
-                    "d0a3a979-0e5f-4e41-92e7-7dbdda74933c": {
-                        "@odata.type": "#microsoft.graph.plannerAssignment",
-                        "orderHint": " !"
-                    }
-                }
+                "title": `${title}`
+                // "assignments": {
+                //     "d0a3a979-0e5f-4e41-92e7-7dbdda74933c": {
+                //         "@odata.type": "#microsoft.graph.plannerAssignment",
+                //         "orderHint": " !"
+                //     }
+                // }
                 
             };
 

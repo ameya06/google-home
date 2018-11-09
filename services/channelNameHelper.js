@@ -3,29 +3,30 @@ var request = require('request');
 var channelId = (name) => {
     switch (name.toLowerCase()) {
         case "general":
-            return "CCXKRKB6W"
-            break;
-        case "test":
-            return "CCYADKQKE"
+            return "CDY5D9PP1"
             break;
         case "random":
-            return "CCWTQA60G"
+            return "CDWU8CTDJ"
+            break;
+        case "jon":
+            return "DE0CK69K8"
+            break;
+        case "judith":
+            return "DDY8J1KNU"
+            break;
+        case "kerry":
+            return "DDZ0TR6KU"
+            break;
+        case "wendi":
+            return "DDZ0TR9EW"
             break;
         case "slackbot":
-            return "DCXGL43UK"
-            break;
-        case "ameya":
-            return "DCZ0Q5T5L"
-            break;
-        case "uma":
-            return "DDMHN0YLV"
+            return "DE02AN955"
             break;
             //CDNP6GNSK
-        case "images":
-            return "CDNP6GNSK"
-            break;
-        case "ameya vdi":
-            return "DD4J6LXUK"
+
+        default:
+            console.log("Channel not found")
             break;
     }
 
