@@ -15,7 +15,7 @@ var getLastImage = async () => {
     stopflag = true
     return new Promise(function (resolve, reject) {
         var option = {
-            url: imageurl,
+            url: imageurl1,
             json: true
         }
         request.get(option, (err, res, body) => {
