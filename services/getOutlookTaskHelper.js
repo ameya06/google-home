@@ -29,11 +29,6 @@ var getOutlookTask = async function (req) {
         .api(`${graphURL}`)
         .get();
 
-
-
-
-
-
       if (req.body.result.parameters.task == "single") {
         output = "Hi " + userName.split(" ")[0] + " , your next outlook task is " + respose.value[0].subject;
         return responseHelper.responseBody(output)

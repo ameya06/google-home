@@ -37,8 +37,6 @@ var getTask = async function (req) {
         for (var i = 1; i < len; i++) {
           taskList += " , " + respose.value[i].title;
           console.log(respose.value[i].title)
-
-
           if (i == 2) break;
         }
 
@@ -50,7 +48,7 @@ var getTask = async function (req) {
 
     } catch (err) {
       console.log('Error in catch from getTaskHelper =======>' + `${err.code}: ${err.message}`)
-      var output = "I am sorry.I did not get you"
+      var output = "Hmm,I cannot see any task on your planner"
       return responseHelper.responseBody(output)
     }
 

@@ -15,7 +15,7 @@ var getLastImage = async () => {
     stopflag = true
     return new Promise(function (resolve, reject) {
         var option = {
-            url: imageurl1,
+            url: imageurl,
             json: true
         }
         request.get(option, (err, res, body) => {
@@ -94,14 +94,13 @@ var startPresentation = async () => {
 
                 setTimeout(function () {
                     console.log(i + " tets")
-                    var makeExternaldata = makeExternal(body.messages[i].files[0].id)
-                    console.log(makeExternaldata)
+                    makeExternal(body.messages[i].files[0].id)
                     var imageUrl = (body.messages[i].files[0].permalink_public);
                     // scrape for metadata
                     if (stopflag) return
                     scrape(imageUrl).then(function (metadata) {
                         console.log(metadata.openGraph.image.url)
-                        images.push(metadata.openGraph.image.url)
+                        if (stopflag) return
                         EmitUrlapp.EmitUrl(metadata.openGraph.image.url)
                     })
                     if (i <= 0) i = len;
@@ -111,12 +110,8 @@ var startPresentation = async () => {
                     console.log("--i " + i)
                 }, 3000);
             }
-
-
-            // cache.put('imageDisplayed', len);
-
             resolve(responseHelper.responseBody('Ok , I have started the presentation '))
-            //sendUrl(body.files[0].permalink_public)
+            
         })
     })
 
@@ -224,11 +219,11 @@ var getTestImage = async () => {
     return responseHelper.responseBody('Ok , I have pulled test the imagaes')
 }
 
-var makeExternal = (id) => {
+var makeExternal = async(id) => {
     urlpost1 = 'https://slack.com/api/files.sharedPublicURL?token=xoxp-439671646674-439671647266-461021596227-f03dedfb5cb1af530024a7ced96eade7&file=' + `${id}` + '&pretty=1'
     urlpost = 'https://slack.com/api/files.sharedPublicURL?token=xoxp-473131921458-474856515188-476438635367-20a34b62dfde255b9ddbe480928c0a82&file=' + `${id}` + '&pretty=1'
     request({
-        url: urlpost1,
+        url: urlpost,
         method: "POST",
         json: true
     }, (err, res, body) => {
