@@ -78,15 +78,15 @@ var startPresentation = async () => {
     stopflag = false
     return new Promise(function (resolve, reject) {
         var option = {
-            url: imageurl1,
+            url: imageurl,
             json: true
         }
         request.get(option, (err, res, body) => {
             if (err) {
                 return console.log(err);
             }
-            console.log(body+" ====> body")
-            var len = Object.keys(body.messages).length - 1;
+            console.log(body.messages[0].files[0].id+" ====> body")
+            var len = Object.keys(body.messages).length - 2;
             presentation(len)
 
             async function presentation(i) {
@@ -215,7 +215,7 @@ var getHomeImage = async () => {
 
 var getTestImage = async () => {
     console.log(cache.get('imageDisplayed'))
-    EmitUrlapp.EmitUrl("https://files.slack.com/files-pri/TCXKRK0KU-FDSGRLWTE/creds.png?pub_secret=7346d05fe8")
+    EmitUrlapp.EmitUrl("http://images.fineartamerica.com/images-medium-large-5/3-american-bald-eagle-in-flight-michel-soucy.jpg")
     return responseHelper.responseBody('Ok , I have pulled test the imagaes')
 }
 
