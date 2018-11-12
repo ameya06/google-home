@@ -72,7 +72,7 @@ var getCalendar = async function (req,access_token) {
             if (i == 3) break
           }
         }
-        var output = "Hi " + firstName[0] + " uyour next meeting starts at " + startlocal[0] + " till " + endlocal + " and the meeting subject is " + result.value[0].subject + meetingBuilderList;
+        var output = "Hi " + firstName[0] + " your next meeting starts at " + startlocal[0] + " till " + endlocal + " and the meeting subject is " + result.value[0].subject + meetingBuilderList;
         return responseHelper.responseBody(output)
 
 
