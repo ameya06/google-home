@@ -20,7 +20,7 @@ router.get('/', async function(req, res, next) {
     }
 
     // Redirect to home
-    res.redirect('/');
+    res.redirect('/index');
   } else {
     // Otherwise complain
     res.render('error', { title: 'Error', message: 'Authorization error', error: { status: 'Missing code parameter' } });
