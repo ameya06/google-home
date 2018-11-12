@@ -7,7 +7,8 @@ var authHelper = require('../helpers/auth');
 router.get('/', async function(req, res, next) {
   // Get auth code
   const code = req.query.code;
-
+   
+  console.log("Landed")
   // If code is present, use it
   if (code) {
     let token;
@@ -32,7 +33,7 @@ router.get('/signout', function(req, res, next) {
   authHelper.clearCookies(res);
 
   // Redirect to home
-  res.redirect('/');
+  res.redirect('/index');
 });
 
 module.exports = router;
