@@ -8,7 +8,7 @@ const responseHelper = require('../services/responseHelper')
 const planId = process.env.PLANID;
 var filterHelper = require('../services/outlooktaskFilter')
 const graphURL = `https://graph.microsoft.com/beta/me/outlook/tasks`
-var getOutlookTask = async function (req) {
+var getOutlookTask = async function (req,access_token) {
 
   if (req.body.result.parameters.dev_token != process.env.DEVELOPER_ACCESS_TOKEN) {
     console.log("In getTaskHelper in token check failed")

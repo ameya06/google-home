@@ -8,13 +8,13 @@ var saveNoteID = require('../config/nodeID')
 
 
 
-var createNote = async function (req) {
+var createNote = async function (req,access_token) {
 
     if (req.body.result.parameters.dev_token != process.env.DEVELOPER_ACCESS_TOKEN) {
         console.log("In createNoteHelper in token check failed")
         return responseHelper.responseBody("I am sorry.I did not get you")
     }
-    const accessToken = await auth.getToken(server);
+    const accessToken = access_token;
     const userName = process.env.NAME;
     if (accessToken && userName) {
         const client = graph.Client.init({
