@@ -8,13 +8,13 @@ var assignmentsId = "d0a3a979-0e5f-4e41-92e7-7dbdda74933c";
 const graphURL = `https://graph.microsoft.com/beta/me/outlook/tasks`
 
 
-var createOutlookTask = async function (req) {
+var createOutlookTask = async function (req,access_token) {
     if (req.body.result.parameters.dev_token != process.env.DEVELOPER_ACCESS_TOKEN) {
         console.log("In createTashsHelper in token check failed")
         var output = "I am sorry.I did not get you"
         return responseHelper.responseBody(output)
     }
-    const accessToken = await auth.getToken(server);
+    const accessToken = access_token;
     const userName = process.env.NAME;
     var subject= req.body.result.parameters.task
     var importance = req.body.result.parameters.importance

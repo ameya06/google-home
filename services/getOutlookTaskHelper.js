@@ -15,7 +15,7 @@ var getOutlookTask = async function (req) {
     var output = "I am sorry.I did not get you"
     return responseHelper.responseBody(output)
   }
-  const accessToken = await auth.getToken(server);
+  const accessToken = access_token;
   const userName = process.env.NAME;
   if (accessToken && userName) {
     const client = graph.Client.init({

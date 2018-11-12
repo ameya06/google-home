@@ -6,14 +6,15 @@ const auth = require('../config/auth_setup')
 var server = process.env.SERVER
 const responseHelper = require('../services/responseHelper')
 const planId = process.env.PLANID;
-var getTask = async function (req) {
+var cache = require('memory-cache');
+var getTask = async function (req,access_token) {
 
   if (req.body.result.parameters.dev_token != process.env.DEVELOPER_ACCESS_TOKEN) {
     console.log("In getTaskHelper in token check failed")
     var output = "I am sorry.I did not get you"
     return responseHelper.responseBody(output)
   }
-  const accessToken = await auth.getToken(server);
+  const accessToken = access_token
   const userName = process.env.NAME;
   if (accessToken && userName) {
     const client = graph.Client.init({

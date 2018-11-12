@@ -7,13 +7,13 @@ const responseHelper = require('../services/responseHelper')
 var assignmentsId = "d0a3a979-0e5f-4e41-92e7-7dbdda74933c";
 
 
-var createTask = async function (req) {
+var createTask = async function (req,access_token) {
     if (req.body.result.parameters.dev_token != process.env.DEVELOPER_ACCESS_TOKEN) {
         console.log("In createTashsHelper in token check failed")
         var output = "I am sorry.I did not get you"
         return responseHelper.responseBody(output)
     }
-    const accessToken = await auth.getToken(server);
+    const accessToken = access_token;
     const userName = process.env.NAME;
     var title = req.body.result.parameters.createTask;
     if (accessToken && userName) {

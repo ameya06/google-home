@@ -17,17 +17,17 @@ var server = process.env.SERVER
 const responseHelper = require('../services/responseHelper')
 const getEmailAddressHelper = require('../services/getEamilAddressHelper')
 var getAtttendeesHelper = require('../services/getAttendesHelper')
+var cache = require('memory-cache');
 
 
-
-var scheduler = async function (req) {
+var scheduler = async function (req,access_token) {
 
   if (req.body.result.parameters.dev_token != process.env.DEVELOPER_ACCESS_TOKEN) {
     console.log("In createCalendarHelper in token check failed")
     var output = "I am sorry.I did not get you"
     return responseHelper.responseBody(output)
   }
-  const accessToken = await auth.getToken(server);
+  const accessToken = access_token
   const userName = process.env.NAME;
   const timeZone = 'America/Chicago';
   const timeZoneOffset = '-05:00';

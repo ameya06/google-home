@@ -13,9 +13,12 @@ var responseHelper = require('../services/responseHelper')
 var createNoteHelper = require('../services/createNoteHelper')
 var addNotesHelper = require('../services/addNotesHelper')
 var getLastMessageHelper = require('../services/getLastMessageHelper')
+var cache = require('memory-cache');
+
 
 // Slack api
 var slackApiToken = process.env.SLACKTOKEN;
+
 
 
 
@@ -28,7 +31,8 @@ var getMessageHelper = require('../services/getLastMessageHelper')
 
 
 router.post('/', async function (req, res) {
-
+    const access_token = cache.get('access_token');
+   // console.log(access_token)
     // if (req.body.result.parameters.dev_token != process.env.DEVELOPER_ACCESS_TOKEN) {
     //     console.log("In intenRouter in token check failed")
     //     var output = "I am sorry.I did not get you"
@@ -38,26 +42,26 @@ router.post('/', async function (req, res) {
 
         // calendar
         case "createCalendarHelper":
-            res.json(await createCalendarHelper.scheduler(req))
+            res.json(await createCalendarHelper.scheduler(req,access_token))
             break;
         case "getCalendar":
-            res.json(await getCalendarHelper.getCalendar(req))
+            res.json(await getCalendarHelper.getCalendar(req,access_token))
             break;
 
             // Planner Task            
         case "getTask":
-            res.json(await getTaskHelper.getTask(req))
+            res.json(await getTaskHelper.getTask(req,access_token))
             break;
         case "createTask":
-            res.json(await createTaskHelper.createTask(req))
+            res.json(await createTaskHelper.createTask(req,access_token))
             break;
 
             // Notes    
         case "createNote":
-            res.json(await createNoteHelper.createNote(req))
+            res.json(await createNoteHelper.createNote(req,access_token))
             break;
         case "addNote":
-            res.json(await addNotesHelper.addNote(req))
+            res.json(await addNotesHelper.addNote(req,access_token))
             break;
         case "getNotes":
             res.send("Work in process")
@@ -65,10 +69,10 @@ router.post('/', async function (req, res) {
 
             // Outlook Task   
         case "getOutlookTask":
-            res.send(await getOutlookTaskHelper.getOutlookTask(req))
+            res.send(await getOutlookTaskHelper.getOutlookTask(req,access_token))
             break;
         case "createOutlookTask":
-            res.send(await createOutlookTaskHelper.createOutlookTask(req))
+            res.send(await createOutlookTaskHelper.createOutlookTask(req,access_token))
             break;
         case "deleteOutlookTask":
             res.send(await responseHelper.responseBody("I am sorry , I did not get you"))

@@ -6,7 +6,6 @@ var imageurl = 'https://slack.com/api/channels.history?token=xoxp-473131921458-4
 var scrape = require('html-metadata');
 var responseHelper = require('../services/responseHelper')
 var cache = require('memory-cache');
-var images = []
 const delay = require('delay');
 var stopflag = false
 

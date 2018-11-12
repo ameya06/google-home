@@ -3,8 +3,10 @@ const moment = require('moment-timezone');
 const auth = require('../config/auth_setup')
 var server = process.env.SERVER
 const responseHelper = require('../services/responseHelper')
+var cache = require('memory-cache');
 
-var getCalendar = async function (req) {
+var getCalendar = async function (req,access_token) {
+  console.log("inside get cal")
 
   if (req.body.result.parameters.dev_token != process.env.DEVELOPER_ACCESS_TOKEN) {
     console.log("In getCalendarHelper in token check failed")
@@ -12,7 +14,8 @@ var getCalendar = async function (req) {
     return responseHelper.responseBody(output)
   }
 
-  const accessToken = await auth.getToken(server);
+  const accessToken = access_token
+  //console.log("access_token====>"+accessToken)
   const userName = process.env.NAME;
   if (accessToken && userName) {
     const client = graph.Client.init({
@@ -49,7 +52,7 @@ var getCalendar = async function (req) {
     } else {
       try {
         var meetingBuilderList = ""
-        console.log('webhook inside else')
+        
         const result = await client
           .api(`/me/calendarView?startDateTime=${start.toISOString()}&endDateTime=${end.toISOString()}`)
           .select('subject,start,end,attendees')

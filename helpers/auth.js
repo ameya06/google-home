@@ -1,4 +1,5 @@
 var auth = require('../config/auth_setup')
+var cache = require('memory-cache');
 
 const credentials = {
   client: {
@@ -31,25 +32,28 @@ async function getTokenFromCode(auth_code, res) {
   });
 
   const token = oauth2.accessToken.create(result);
-
-  auth.saveToken(token.token.access_token).then(console.log('token saved')).catch((err) => console.log('Error in saving the token==>' + err))
+  saveValues(token)
+  console.log("time body =======>" +token.token.expires_at.getTime())
+  // auth.saveToken(token.token.access_token).then(console.log('token saved')).catch((err) => console.log('Error in saving the token==>' + err))
+  // console.log(token.token.refresh_token+" token body")
+  // console.log("-------------------------")
+  // cache.put('refresh_token', token.token.refresh_token);
+ // console.log(JSON.stringify(res)+" res body")
   saveValuesToCookie(token, res);
- 
-
-
   return token.token.access_token;
-  x
+  
 }
 
-async function getAccessToken(cookies, res) {
-  // Do we have an access token cached?
-  let token = cookies.graph_access_token;
+async function getAccessToken(access_token) {
+  console.log("Inside access_token")
+  let token = access_token;
    
   if (token) {
+    console.log("inside Token check ")
     // We have a token, but is it expired?
     // Expire 5 minutes early to account for clock differences
     const FIVE_MINUTES = 300000;
-    const expiration = new Date(parseFloat(cookies.graph_token_expires - FIVE_MINUTES));
+    const expiration = new Date(parseFloat(cache.get('expires_time') - FIVE_MINUTES));
     if (expiration > new Date()) {
       // Token is still good, just return it
       return token;
@@ -58,18 +62,28 @@ async function getAccessToken(cookies, res) {
 
   // Either no token or it's expired, do we have a 
   // refresh token?
-  const refresh_token = cookies.graph_refresh_token;
+  const refresh_token = cache.get('refresh_token');
   if (refresh_token) {
     const newToken = await oauth2.accessToken.create({
       refresh_token: refresh_token
     }).refresh();
-    saveValuesToCookie(newToken, res);
+    saveValues(newToken)
+    //saveValuesToCookie(newToken, res);
+    console.log("Token refreshed")
 
     return newToken.token.access_token;
   }
 
   // Nothing in the cookies that helps, return empty
   return null;
+}
+
+function  saveValues(token)
+{
+  auth.saveToken(token).then(console.log('token saved')).catch((err) => console.log('Error in saving the token==>' + err))
+  cache.put('access_token',token.token.access_token)
+  cache.put('refresh_token', token.token.refresh_token);
+  cache.put('expires_time',token.token.expires_at.getTime())
 }
 
 function saveValuesToCookie(token, res) {

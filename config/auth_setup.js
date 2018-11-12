@@ -2,7 +2,12 @@ var AuthToken = require('../models/auth_model')
 var auth_token = ''
 
 module.exports = {
-    saveToken: (auth_token) => {
+    saveToken: (token) => {
+        var access_token = token.token.access_token
+        var refresh_token = token.token.refresh_token
+        var id_token = token.token.id_token
+        var expires_at = token.token.expires_at
+
         return AuthToken.findOne({
             server: process.env.SERVER
         }).then((currentServer) => {
@@ -10,7 +15,10 @@ module.exports = {
                 AuthToken.updateOne({
                     server: process.env.SERVER,
                     $set: {
-                        token: auth_token
+                        access_token: access_token,
+                        refresh_token: refresh_token,
+                        id_token: id_token,
+                        expires_at: expires_at
                     }
                 }).then((updatedAuth) => {
                     console.log('Updated Auth')
@@ -23,7 +31,10 @@ module.exports = {
             } else {
                 new AuthToken({
                     server: process.env.SERVER,
-                    token: auth_token
+                    access_token: access_token,
+                    refresh_token: refresh_token,
+                    id_token: id_token,
+                    expires_at: expires_at
                 }).save().then((newAuth) => {
                     console.log('new auth created')
                     return null
@@ -40,7 +51,7 @@ module.exports = {
         return AuthToken.findOne({
             server: process.env.SERVER
         }).then((currentServer) => {
-            return currentServer.token
+            return currentServer
         }).catch((err) => {
             console.log("Issue in catch" + err)
         })

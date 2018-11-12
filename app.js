@@ -22,9 +22,12 @@ var mongoose = require('mongoose')
 var dev_config = require('./config/dev_config')
 const request = require('request');
 var cache = require('memory-cache');
+var auth = require('./helpers/auth')
+var cacheWarmingHelper = require('./services/cacheWarmingHelper')
 
 const port = process.env.PORT || 5000;
 var app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -37,6 +40,8 @@ mongoose.connect(dev_config.mongodb.dbURI, {
   useNewUrlParser: true
 }).then(() => {
     console.log("Connected to db")
+    //Warming the cache
+    cacheWarmingHelper.cacheWarming()
   },
   (error) => {
     console.log("DB connection Error ===> " + error)
@@ -86,11 +91,20 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
-// keeping server awake
+
+
+
 setInterval(function () {
+  //Keeping server awake
   request.get("https://dry-caverns-78381.herokuapp.com/");
   console.log("Keeping server awake")
+  //Refresh token
+  auth.getAccessToken(cache.get("access_token"))
 }, 900000);
+
+// //Warming the cache
+// cacheWarmingHelper.cacheWarming()
+
 
 cache.put('imageDisplayed', 0);
 
