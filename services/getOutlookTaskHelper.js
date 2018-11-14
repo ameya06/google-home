@@ -36,13 +36,16 @@ var getOutlookTask = async function (req,access_token) {
       if (req.body.result.parameters.task == "all") {
         var taskList = "";
         var len = Object.keys(respose.value).length;
-
-       
-        for (var i = 1; i < len; i++) {
-          taskList += " , " + respose.value[i].title;
-          console.log(respose.value[i].title)
-          if (i == 2) break;
+        console.log(len+"len")
+       // taskList += respose.value[0].subject;
+        if(len>1){
+          for (var i = 1; i < len; i++) {
+            taskList += " , " + respose.value[i].subject;
+            console.log(respose.value[i].subject+"======");
+            if (i == 2) break;
+          }
         }
+        
         output = "Hi " + userName.split(" ")[0] + " , you have " + len + " tasks , and your next top tasks are " + "  " + respose.value[0].subject + taskList;
 
         return responseHelper.responseBody(output)
