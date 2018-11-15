@@ -41,7 +41,7 @@ var getOutlookTask = async function (req,access_token) {
         if(len>1){
           for (var i = 1; i < len; i++) {
             taskList += " , " + respose.value[i].subject;
-            console.log(respose.value[i].subject+"======");
+            console.log(respose.value[i].subject+"======"); 
             if (i == 2) break;
           }
         }
