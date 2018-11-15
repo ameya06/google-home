@@ -96,7 +96,7 @@ app.use(function (err, req, res, next) {
 
 setInterval(function () {
   //Keeping server awake
-  request.get("https://dry-caverns-78381.herokuapp.com/");
+  request.get("https://rocky-sea-25496.herokuapp.com/");
   console.log("Keeping server awake")
   //Refresh token
   auth.getAccessToken(cache.get("access_token"))
